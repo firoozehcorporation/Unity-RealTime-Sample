@@ -29,7 +29,20 @@ public class MenuController : MonoBehaviour
 
     void Start()
     {
-        if(GameService.IsAuthenticated()) return;
+        if(GameService.IsAuthenticated())
+        {
+            Status.text = "Status : Connected!";
+            StartGameBtn.interactable = true;
+            StartGameBtn.onClick.AddListener(async () =>
+            {
+                await GameService.GSLive.RealTime.AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample"));
+                
+                Status.color = Color.green;
+                Status.text = "MatchMaking...";
+                StartGameBtn.interactable = false;
+            });
+            return;
+        }
             
         SetEventListeners();
         ConnectToGamesService();

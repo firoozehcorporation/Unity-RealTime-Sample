@@ -7,6 +7,7 @@ using FiroozehGameService.Models.GSLive.RT;
 using Models;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Action = Models.Action;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -32,6 +33,8 @@ namespace Controllers
         private void LeftRoom(object sender, Member e)
         {
             Debug.Log("enemy left game!" + e.Name);
+            GameService.GSLive.RealTime.LeaveRoom();
+            SceneManager.LoadScene("MenuScene");
         }
 
         private void NewMessageReceived(object sender, MessageReceiveEvent message)
@@ -43,11 +46,11 @@ namespace Controllers
             {
                 case Action.Translate:
                     var vect3 = new Vector3(data.Vector3.X, data.Vector3.Y, data.Vector3.Z);
-                    enemy.transform.position = Vector3.Lerp(enemy.transform.position,vect3,0.1f);
+                    enemy.transform.position = Vector3.Lerp(enemy.transform.position,vect3,Time.deltaTime * 30);
                     break;
                 case Action.Rotate:
                     var quaternion = new Quaternion(data.Quaternion.X, data.Quaternion.Y, data.Quaternion.Z,data.Quaternion.W);
-                    enemy.transform.rotation = Quaternion.Lerp(enemy.transform.rotation,quaternion,0.1f);
+                    enemy.transform.rotation = Quaternion.Lerp(enemy.transform.rotation,quaternion,Time.deltaTime * 30);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -55,7 +58,9 @@ namespace Controllers
         }
 
         // Update is called once per frame
-        void Update()
+      
+
+        private void Update()
         {
             //Move Front/Back
             if (MobileJoystickUi.instance.moveDirection.y != 0)
@@ -72,9 +77,7 @@ namespace Controllers
                 me.transform.Rotate(data,Space.Self);
                 SendDataToEnemy(me.transform.rotation,Action.Rotate);
             }
-
         }
-
 
 
         private static void SendDataToEnemy(Vector3 data,Action action)
