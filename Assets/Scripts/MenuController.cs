@@ -100,6 +100,7 @@ public class MenuController : MonoBehaviour
                             LoginErr.text = "Invalid Input!";
                         else
                             await GameService.SignUp(nickName, email, pass);
+                          
                         
 
                     }
@@ -111,12 +112,8 @@ public class MenuController : MonoBehaviour
                         if (string.IsNullOrEmpty(email) && string.IsNullOrEmpty(pass))
                             LoginErr.text = "Invalid Input!";
                         else
-                        { 
                             await GameService.Login(email, pass);
-                            // Disable LoginUI
-                            StartMenu.SetActive(true);
-                            LoginMenu.SetActive(false);
-                        }
+                        
                     }
                 }
                 catch (Exception e)
@@ -167,6 +164,9 @@ public class MenuController : MonoBehaviour
 
         private void OnSuccessfullyLogined(object sender, EventArgs e)
         {
+            StartMenu.SetActive(true);
+            LoginMenu.SetActive(false);
+            
             Status.text = "Status : Connected!";
             StartGameBtn.interactable = true;
             StartGameBtn.onClick.AddListener(async () =>
