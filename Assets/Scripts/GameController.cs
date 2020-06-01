@@ -19,11 +19,25 @@ namespace Controllers
         public GameObject me;
         public GameObject enemy;
 
+        private Vector3 _realPosition;
+        private Quaternion _realRotation;
+        
+        
+        private Vector3 _oldPosition;
+        private Quaternion _oldRotation;
+        
 
         void Start()
         {
             enemy.GetComponent<Renderer>().material.color = Color.red;
             me.GetComponent<Renderer>().material.color = Color.green;
+
+            // setup With Real Values
+            _realPosition = enemy.transform.position;
+            _realRotation = enemy.transform.rotation;
+            
+            _oldPosition = me.transform.position;
+            _oldRotation = me.transform.rotation;
             
             RealTimeEventHandlers.NewMessageReceived += NewMessageReceived;
             RealTimeEventHandlers.LeftRoom += LeftRoom;
@@ -40,17 +54,14 @@ namespace Controllers
         private void NewMessageReceived(object sender, MessageReceiveEvent message)
         {
             var data = JsonConvert.DeserializeObject<Data>(message.Message.Data);
-            //Debug.Log(message.Message.Data);
 
             switch (data.Action)
             {
                 case Action.Translate:
-                    var vect3 = new Vector3(data.Vector3.X, data.Vector3.Y, data.Vector3.Z);
-                    enemy.transform.position = Vector3.Lerp(enemy.transform.position,vect3,Time.deltaTime * 30);
+                    _realPosition = new Vector3(data.Vector3.X, data.Vector3.Y, data.Vector3.Z);
                     break;
                 case Action.Rotate:
-                    var quaternion = new Quaternion(data.Quaternion.X, data.Quaternion.Y, data.Quaternion.Z,data.Quaternion.W);
-                    enemy.transform.rotation = Quaternion.Lerp(enemy.transform.rotation,quaternion,Time.deltaTime * 30);
+                    _realRotation = new Quaternion(data.Quaternion.X, data.Quaternion.Y, data.Quaternion.Z,data.Quaternion.W);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -62,20 +73,26 @@ namespace Controllers
 
         private void Update()
         {
-            //Move Front/Back
-            if (MobileJoystickUi.instance.moveDirection.y != 0)
-            {
-                var data = transform.forward * (Time.deltaTime * 2.45f * MobileJoystickUi.instance.moveDirection.y);
-                me.transform.Translate(data,Space.World);
-                SendDataToEnemy(me.transform.position, Action.Translate);
-            }
+            
+            // Update Enemy 
+            enemy.transform.position = Vector3.Lerp(enemy.transform.position,_realPosition,0.1f);
+            enemy.transform.rotation = Quaternion.Lerp(enemy.transform.rotation,_realRotation,0.1f);
 
-            //Rotate Left/Right
-            if (MobileJoystickUi.instance.moveDirection.x != 0)
+            
+            // send to server
+            var newPos = me.transform.position;
+            var newRot = me.transform.rotation;
+            
+            if (_oldPosition != newPos)
             {
-                var data = new Vector3(0, 14, 0) * (Time.deltaTime * 4.5f * MobileJoystickUi.instance.moveDirection.x);
-                me.transform.Rotate(data,Space.Self);
-                SendDataToEnemy(me.transform.rotation,Action.Rotate);
+                _oldPosition = newPos;
+                SendDataToEnemy(newPos, Action.Translate);
+            }
+            
+            if (_oldRotation != newRot)
+            {
+                _oldRotation = newRot;
+                SendDataToEnemy(newRot,Action.Rotate);
             }
         }
 
@@ -105,16 +122,24 @@ namespace Controllers
         
         private static void SendDataToEnemy(Quaternion data,Action action)
         {
-            var d = new Data {
-                Action = action , Quaternion = new Models.Quaternion
-                {
-                    X = data.x , Y = data.y , Z = data.z , W = data.w
-                }
-            };
-            var jsonData = JsonConvert.SerializeObject(d);
+            try
+            {
+                var d = new Data {
+                    Action = action , Quaternion = new Models.Quaternion
+                    {
+                        X = data.x , Y = data.y , Z = data.z , W = data.w
+                    }
+                };
+                var jsonData = JsonConvert.SerializeObject(d);
             
-            if(GameService.GSLive.IsRealTimeAvailable()) 
-                GameService.GSLive.RealTime.SendPublicMessage(jsonData,GProtocolSendType.Reliable);
+                if(GameService.GSLive.IsRealTimeAvailable()) 
+                    GameService.GSLive.RealTime.SendPublicMessage(jsonData,GProtocolSendType.UnReliable);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("SendDataToEnemy" + e);
+            }
+           
         }
     }
 }
