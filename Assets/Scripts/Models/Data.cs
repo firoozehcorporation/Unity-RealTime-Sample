@@ -39,10 +39,9 @@ namespace Models
         public Action Action;
         
         [JsonProperty("2")]
-        public Vector3 Vector3;
+        public Vector3 Position;
         
         [JsonProperty("3")]
-        public Quaternion Quaternion;
-        
+        public Quaternion Rotation;
     }
 }

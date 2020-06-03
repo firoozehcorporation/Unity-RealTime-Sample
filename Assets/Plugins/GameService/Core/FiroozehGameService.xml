@@ -1882,6 +1882,37 @@
             </summary>
             <value>the Sender Id</value>
         </member>
+        <member name="T:FiroozehGameService.Models.GSLive.RT.MessageInfo">
+            <summary>
+            Represents MessageInfo When Message Received in GSLiveRealTime
+            </summary>
+        </member>
+        <member name="P:FiroozehGameService.Models.GSLive.RT.MessageInfo.MessageType">
+            <summary>
+            Gets the Type of Received Message 
+            </summary>
+            <value>Type of Received Message</value>
+        </member>
+        <member name="P:FiroozehGameService.Models.GSLive.RT.MessageInfo.SendType">
+            <summary>
+            Gets the Type of Protocol Send Message
+            if is Reliable , the Packet Loss is Minimized.
+            </summary>
+            <value>the Type of Protocol Send Message </value>
+        </member>
+        <member name="P:FiroozehGameService.Models.GSLive.RT.MessageInfo.RoundTripTime">
+            <summary>
+            Gets Server RTT Time
+            you can use it to calculate Ping Time
+            </summary>
+            <value>Server RTT Time</value>
+        </member>
+        <member name="P:FiroozehGameService.Models.GSLive.RT.MessageInfo.ClientReceiveTime">
+            <summary>
+            Gets Client Packet Receive Time in Unix
+            </summary>
+            <value>Client Packet Receive Time</value>
+        </member>
         <member name="T:FiroozehGameService.Models.GSLive.RT.MessageReceiveEvent">
             <summary>
             Represents MessageReceiveEvent When Message Received in GSLiveRealTime
@@ -1893,18 +1924,11 @@
             </summary>
             <value>the Received Message</value>
         </member>
-        <member name="P:FiroozehGameService.Models.GSLive.RT.MessageReceiveEvent.MessageType">
+        <member name="P:FiroozehGameService.Models.GSLive.RT.MessageReceiveEvent.MessageInfo">
             <summary>
-            Gets the Type of Received Message 
+            Gets the Received Message Info
             </summary>
-            <value>Type of Received Message</value>
-        </member>
-        <member name="P:FiroozehGameService.Models.GSLive.RT.MessageReceiveEvent.SendType">
-            <summary>
-            Gets the Type of Protocol Send Message
-            if is Reliable , the Packet Loss is Minimized.
-            </summary>
-            <value>Gets the Type of Protocol Send Message </value>
+            <value>the Received Message Info</value>
         </member>
         <member name="T:FiroozehGameService.Models.GSLive.TB.Complete">
             <summary>
@@ -2045,7 +2069,7 @@
             <summary>
             Check DeviceTimeValid 
             </summary>
-            <value>Returns True if Device Time Is Valid(Same With Server)</value>
+            <value>Returns True if Device Time Is Valid(not grater than 2 sec With Server)</value>
         </member>
         <member name="T:FiroozehGameService.Models.Internal.SystemInfo">
             <summary>
