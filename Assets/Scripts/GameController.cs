@@ -1,194 +1,87 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Controller;
 using FiroozehGameService.Core;
 using FiroozehGameService.Handlers;
-using FiroozehGameService.Models.Enums;
 using FiroozehGameService.Models.GSLive;
-using FiroozehGameService.Models.GSLive.RT;
-using Models;
-using Newtonsoft.Json;
+using Plugins.GameService.Utils.RealTimeUtil;
+using Plugins.GameService.Utils.RealTimeUtil.Models.CallbackModels;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Action = Models.Action;
+using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class GameController : MonoBehaviour
 {
-    [Header("Objects")]
-    public GameObject me;
-    public GameObject enemy;
+    public GameObject mePrefab;
+    public Button spawnPlayerBtn;
+    public Camera mainCamera;
+    public Canvas spawnCanvas;
+    
+    
+    private GameObject _me,_enemy;
 
-    public TextMesh enemyMemberName;
-    public TextMesh meMemberName;
-    
-    [Header("Config Values")]
-    public float posThreshold = 0.5f;
-    public float rotThreshold = 5;
-    public float lerpRate = 10;
-    public bool synchronizePosition = true;
-    public bool synchronizeRotation = true;
-    
-    
-    private Vector3 _mNetworkPosition;
-    private Quaternion _mNetworkRotation;
-    private Vector3 _oldPosition;
-    private Quaternion _oldRotation;
-
-  
     void Start()
     {
-        enemy.GetComponent<Renderer>().material.color = Color.red;
-        me.GetComponent<Renderer>().material.color = Color.green;
-
-        // setup With Real Values
-        _oldPosition = me.transform.position;
-        _oldRotation = me.transform.rotation;
-        
-        
-        _mNetworkPosition = enemy.transform.position;
-        _mNetworkRotation = enemy.transform.rotation;
-        
-        StartCoroutine(GetRoomMember());
-
-        RealTimeEventHandlers.NewMessageReceived += NewMessageReceived;
         RealTimeEventHandlers.LeftRoom += LeftRoom;
-        RealTimeEventHandlers.RoomMembersDetailReceived += RoomMembersDetailReceived;
+        GsLiveRealtime.Callbacks.OnBeforeInstantiateHandler += OnBeforeInstantiateHandler;
+        GsLiveRealtime.Callbacks.OnAfterInstantiateHandler += OnAfterInstantiateHandler;
+        GsLiveRealtime.Callbacks.OnDestroyObjectHandler += OnDestroyObjectHandler;
+        spawnPlayerBtn.onClick.AddListener(SpawnPlayer);
     }
 
-    private static IEnumerator GetRoomMember()
+    
+    private static void OnDestroyObjectHandler(object sender, OnDestroyObject onDestroyObject)
     {
-        Debug.Log("wait GetRoomMembersDetail request to all member join room ...");
-        yield return new WaitForSeconds(2);
-        Debug.Log("GetRoomMembersDetail request now");
-        // get GetRoomMembersDetail
-        GameService.GSLive.RealTime.GetRoomMembersDetail();
+        Debug.Log("is Tag : " + onDestroyObject.isTag + ", Name : " + onDestroyObject.objectNameOrTag);
     }
 
-    private void RoomMembersDetailReceived(object sender, List<Member> members)
+    private void OnAfterInstantiateHandler(object sender, OnAfterInstantiate onAfter)
     {
-       
-        foreach (var member in members)
-        {
-            Debug.Log("RoomMembersDetailReceived : " + member.Name + "  "+member.User.IsMe);
-            // set enemy name
-            if (!member.User.IsMe)
-            {
-                enemyMemberName.text = member.Name;
-                enemyMemberName.color = Color.red;
-            }
-            // set my name
-            else
-            {
-                meMemberName.text = member.Name;
-                meMemberName.color = Color.green;
-            }
-        }
+        Debug.Log("OnAfterInstantiateHandler : " + onAfter.prefabName);
+
+        _enemy = onAfter.gameObject;
+        // enable Game Object
+        _enemy.SetActive(true);
+        _enemy.GetComponent<Renderer>().material.color = Color.red;
+        
+        // disable Character Movement for enemy
+        _enemy.GetComponent<CharacterMovement>().enabled = false;
     }
 
+    private static void OnBeforeInstantiateHandler(object sender, OnBeforeInstantiate onBefore)
+    {
+        Debug.Log("OnBeforeInstantiateHandler : " + onBefore.prefabName);
+    }
+    
+    
 
-    private void LeftRoom(object sender, Member e)
+    private void SpawnPlayer()
+    {
+        var randomX = Random.Range(-5f, 5f);
+        var randomZ = Random.Range(-5f, 5f);
+        var randomVector = new Vector3(randomX,.5f,randomZ);
+        
+        Debug.Log("Player Spawn in " + randomVector);
+        mainCamera.gameObject.SetActive(false);
+        spawnCanvas.gameObject.SetActive(false);
+
+        _me = GsLiveRealtime.Instantiate(mePrefab.name, randomVector, Quaternion.identity);
+        
+        // Enable Objects for current Player
+        _me.GetComponent<PlayerObjectController>().SetActiveObjects(true);
+        _me.SetActive(true);
+        _me.GetComponent<Renderer>().material.color = Color.green;
+        
+        Debug.Log("Player Spawn Done!");
+    }
+    
+
+    private static void LeftRoom(object sender, Member e)
     {
         Debug.Log("enemy left game!" + e.Name);
         GameService.GSLive.RealTime.LeaveRoom();
         SceneManager.LoadScene("MenuScene");
     }
-
-    private void NewMessageReceived(object sender, MessageReceiveEvent message)
-    {
-        var data = JsonConvert.DeserializeObject<Data>(message.Message.Data);
-
-        //var rtt = message.MessageInfo.RoundTripTime;
-        //Debug.Log("rtt : " + rtt);
-        
-        switch (data.Action)
-        {
-            case Action.Translate:
-                _mNetworkPosition = new Vector3(data.Position.X, data.Position.Y, data.Position.Z);
-                break;
-            case Action.Rotate:
-                _mNetworkRotation = new Quaternion(data.Rotation.X, data.Rotation.Y, data.Rotation.Z,data.Rotation.W);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    // Update is called once per frame
-      
-
-    private void Update()
-    {
-        // Update Enemy 
-        enemy.transform.position = Vector3.Lerp(enemy.transform.position, _mNetworkPosition, Time.deltaTime * lerpRate);
-        enemy.transform.rotation = Quaternion.Lerp(enemy.transform.rotation,_mNetworkRotation, Time.deltaTime * lerpRate);
-
-        
-        // send to server
-        var newPos = me.transform.position;
-        var newRot = me.transform.rotation;
-            
-        if (Vector3.Distance(_oldPosition,newPos) > posThreshold)
-        {
-            _oldPosition = newPos;
-            if (synchronizePosition)
-                SendDataToEnemy(me.transform.position,Action.Translate);
-            
-        }
-
-        if (Quaternion.Angle(_oldRotation,newRot) > rotThreshold)
-        {
-            _oldRotation = newRot;
-            if (synchronizeRotation)
-                SendDataToEnemy(me.transform.rotation, Action.Rotate);
-        }
-    }
-
-
-    private static void SendDataToEnemy(Vector3 pos,Action action)
-    {
-        try
-        {
-            var d = new Data {
-                Action = action ,
-                Position = new Models.Vector3
-                {
-                    X = pos.x , Y = pos.y , Z = pos.z
-                }
-            };
-            var jsonData = JsonConvert.SerializeObject(d);
-            
-            if(GameService.GSLive.IsRealTimeAvailable()) 
-                GameService.GSLive.RealTime.SendPublicMessage(jsonData,GProtocolSendType.UnReliable);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("SendDataToEnemy" + e);
-        }
-           
-    }
-        
-        
-    private static void SendDataToEnemy(Quaternion data,Action action)
-    {
-        try
-        {
-            var d = new Data {
-                Action = action , Rotation = new Models.Quaternion
-                {
-                    X = data.x , Y = data.y , Z = data.z , W = data.w
-                }
-            };
-            var jsonData = JsonConvert.SerializeObject(d);
-            
-            if(GameService.GSLive.IsRealTimeAvailable()) 
-                GameService.GSLive.RealTime.SendPublicMessage(jsonData,GProtocolSendType.UnReliable);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("SendDataToEnemy" + e);
-        }
-           
-    }
+    
 }

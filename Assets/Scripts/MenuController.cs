@@ -153,8 +153,11 @@ public class MenuController : MonoBehaviour
             Debug.Log("OnJoinRoom : " + e.JoinData.JoinedMember.Name);
             var activeScene = SceneManager.GetActiveScene();
             // Go To GameScene When Joined To Room
-            if(activeScene.name == "MenuScene")
+            if (activeScene.name == "MenuScene")
+            {
+                Debug.Log("GameScene Load...");
                 SceneManager.LoadScene("GameScene");
+            }
         }
 
         private void OnError(object sender, ErrorEvent e)
@@ -171,7 +174,7 @@ public class MenuController : MonoBehaviour
             StartGameBtn.interactable = true;
             StartGameBtn.onClick.AddListener(async () =>
             {
-                await GameService.GSLive.RealTime.AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample"));
+                await GameService.GSLive.RealTime.AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample",2,3));
                 
                 Status.color = Color.green;
                 Status.text = "MatchMaking...";

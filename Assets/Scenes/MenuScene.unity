@@ -1550,6 +1550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClientId: doodooid
   ClientSecret: 5c39mkixnkydoa80kwjhl5
+  RealTimeUtilEnabled: 1
 --- !u!1 &1282209485
 GameObject:
   m_ObjectHideFlags: 0
