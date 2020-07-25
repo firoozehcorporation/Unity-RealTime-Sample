@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 5348599012719395012}
   - component: {fileID: 5348599012719395013}
   - component: {fileID: 6992722817524897716}
-  - component: {fileID: 6570783907835939828}
+  - component: {fileID: 3671166482664682362}
   - component: {fileID: 6828593859128354611}
   - component: {fileID: 5577068457457596306}
   - component: {fileID: 3604128964816024347}
@@ -713,8 +713,8 @@ MonoBehaviour:
   ownerId: 
   forMe: 0
   serializableComponents:
-  - {fileID: 6570783907835939828}
---- !u!114 &6570783907835939828
+  - {fileID: 3671166482664682362}
+--- !u!114 &3671166482664682362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -723,13 +723,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5348599012719395034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a99c3f18da0e47b5a663be67a19b7bea, type: 3}
+  m_Script: {fileID: 11500000, guid: 690f81125c414af0a245da8b2cdc3728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posThreshold: 0.5
-  rotThreshold: 5
-  lerpRatePosition: 15
-  lerpRateRotation: 30
   synchronizePosition: 1
   synchronizeRotation: 1
   synchronizeScale: 0
