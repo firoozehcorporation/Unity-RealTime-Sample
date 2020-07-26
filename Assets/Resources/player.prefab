@@ -605,12 +605,11 @@ GameObject:
   - component: {fileID: 5348599012719395021}
   - component: {fileID: 5348599012719395015}
   - component: {fileID: 5348599012719395012}
-  - component: {fileID: 5348599012719395013}
+  - component: {fileID: 3604128964816024347}
   - component: {fileID: 6992722817524897716}
   - component: {fileID: 3671166482664682362}
   - component: {fileID: 6828593859128354611}
   - component: {fileID: 5577068457457596306}
-  - component: {fileID: 3604128964816024347}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -684,8 +683,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &5348599012719395013
-BoxCollider:
+--- !u!143 &3604128964816024347
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -695,7 +694,12 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6992722817524897716
 MonoBehaviour:
@@ -711,9 +715,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   ownerId: 
-  forMe: 0
-  serializableComponents:
-  - {fileID: 3671166482664682362}
+  isMine: 0
+  serializableComponent: {fileID: 3671166482664682362}
 --- !u!114 &3671166482664682362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,7 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  rotAngle: 0
+  rotAngle: 2
   turnSmoothTime: 1
   forward: {x: 0, y: 0, z: 0}
   inputHorizontal: 0
@@ -763,24 +766,6 @@ MonoBehaviour:
   m_inpul_left: {fileID: 3328602023305204790}
   m_inpul_Right: {fileID: 2516156452925931344}
   PC: 0
---- !u!143 &3604128964816024347
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5348599012719395034}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6155540192576444026
 GameObject:
   m_ObjectHideFlags: 0
