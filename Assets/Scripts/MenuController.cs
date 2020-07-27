@@ -174,7 +174,7 @@ public class MenuController : MonoBehaviour
             StartGameBtn.interactable = true;
             StartGameBtn.onClick.AddListener(async () =>
             {
-                await GameService.GSLive.RealTime.AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample",2,3));
+                await GameService.GSLive.RealTime.AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample"));
                 
                 Status.color = Color.green;
                 Status.text = "MatchMaking...";
