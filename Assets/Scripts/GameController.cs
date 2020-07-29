@@ -27,10 +27,19 @@ public class GameController : MonoBehaviour
         GsLiveRealtime.Callbacks.OnBeforeInstantiateHandler += OnBeforeInstantiateHandler;
         GsLiveRealtime.Callbacks.OnAfterInstantiateHandler += OnAfterInstantiateHandler;
         GsLiveRealtime.Callbacks.OnDestroyObjectHandler += OnDestroyObjectHandler;
+        GsLiveRealtime.Callbacks.OnPropertyEvent += OnPropertyEvent;
         spawnPlayerBtn.onClick.AddListener(SpawnPlayer);
     }
 
-    
+    private static void OnPropertyEvent(object sender, OnPropertyEvent propertyEvent)
+    {
+        Debug.Log("OnPropertyEvent > Ac : " + propertyEvent.actions
+                                            + ", Name : " + propertyEvent.propertyName
+                                            + ", Data : " + propertyEvent.propertyData
+                                            + ", OwnerID : " + propertyEvent.ownerMemberId);
+    }
+
+
     private static void OnDestroyObjectHandler(object sender, OnDestroyObject onDestroyObject)
     {
         Debug.Log("is Tag : " + onDestroyObject.isTag + ", Name : " + onDestroyObject.objectNameOrTag);
@@ -67,7 +76,7 @@ public class GameController : MonoBehaviour
         spawnCanvas.gameObject.SetActive(false);
 
         _me = GsLiveRealtime.Instantiate(mePrefab.name, randomVector, Quaternion.identity);
-        
+
         // Enable Objects for current Player
         _me.GetComponent<PlayerObjectController>().SetActiveObjects(true);
         _me.SetActive(true);
@@ -75,7 +84,7 @@ public class GameController : MonoBehaviour
         
         Debug.Log("Player Spawn Done!");
     }
-    
+
 
     private static void LeftRoom(object sender, Member e)
     {

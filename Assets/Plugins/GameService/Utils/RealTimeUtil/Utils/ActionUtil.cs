@@ -30,6 +30,7 @@ using Plugins.GameService.Utils.RealTimeUtil.Interfaces;
 using Plugins.GameService.Utils.RealTimeUtil.Models;
 using Plugins.GameService.Utils.RealTimeUtil.Models.CallbackModels;
 using Plugins.GameService.Utils.RealTimeUtil.Models.SendableObjects;
+using UnityEngine;
 using Types = Plugins.GameService.Utils.RealTimeUtil.Consts.Types;
 
 namespace Plugins.GameService.Utils.RealTimeUtil.Utils
@@ -146,11 +147,11 @@ namespace Plugins.GameService.Utils.RealTimeUtil.Utils
             {
                 case PropertyActions.Apply:
                     handler.ApplyProperty(ownerId,new Property(property.Name,property.Data));
-                    GsLiveRealtime.Callbacks.OnPropertyEvent?.Invoke(null,new OnPropertyEvent(property.Name,actions, property.Data));
+                    GsLiveRealtime.Callbacks.OnPropertyEvent?.Invoke(null,new OnPropertyEvent(property.Name,ownerId,actions, property.Data));
                     break;
                 case PropertyActions.Remove:
                     handler.RemoveProperty(ownerId,property.Name);
-                    GsLiveRealtime.Callbacks.OnPropertyEvent?.Invoke(null,new OnPropertyEvent(property.Name,actions));
+                    GsLiveRealtime.Callbacks.OnPropertyEvent?.Invoke(null,new OnPropertyEvent(property.Name,ownerId,actions));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

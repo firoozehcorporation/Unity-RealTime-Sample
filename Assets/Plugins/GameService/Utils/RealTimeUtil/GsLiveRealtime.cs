@@ -133,12 +133,12 @@ namespace Plugins.GameService.Utils.RealTimeUtil
         private static void OnNewEventHandler(object sender, EventData eventData)
         {
             var action = (Types) eventData.Caller[0];
-            ActionUtil.ApplyData(action,eventData.SenderId,eventData.Caller,eventData.Data,_prefabHandler,_monoBehaviourHandler);
+            ActionUtil.ApplyData(action,eventData.SenderId,eventData.Caller,eventData.Data,_prefabHandler,_monoBehaviourHandler,_propertyHandler);
         }
         
         private static void OnNewSnapShotReceived(object sender, List<SnapShotData> snapShotDatas)
         {
-            ActionUtil.ApplySnapShot(snapShotDatas,_prefabHandler,_monoBehaviourHandler);
+            ActionUtil.ApplySnapShot(snapShotDatas,_prefabHandler,_monoBehaviourHandler,_propertyHandler);
         }
         
         
