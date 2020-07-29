@@ -31,6 +31,7 @@ namespace Plugins.GameService.Utils.RealTimeUtil.Models.SendableObjects
         internal object Data;
         
         internal PropertyData(){}
+        
         internal PropertyData(string name,object data = null)
         {
             Data = data;

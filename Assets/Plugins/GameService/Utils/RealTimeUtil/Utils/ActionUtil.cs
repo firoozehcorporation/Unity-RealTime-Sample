@@ -27,6 +27,7 @@ using FiroozehGameService.Utils.Serializer;
 using FiroozehGameService.Utils.Serializer.Models;
 using Plugins.GameService.Utils.RealTimeUtil.Consts;
 using Plugins.GameService.Utils.RealTimeUtil.Interfaces;
+using Plugins.GameService.Utils.RealTimeUtil.Models;
 using Plugins.GameService.Utils.RealTimeUtil.Models.CallbackModels;
 using Plugins.GameService.Utils.RealTimeUtil.Models.SendableObjects;
 using Types = Plugins.GameService.Utils.RealTimeUtil.Consts.Types;
@@ -144,7 +145,7 @@ namespace Plugins.GameService.Utils.RealTimeUtil.Utils
             switch (actions)
             {
                 case PropertyActions.Apply:
-                    handler.ApplyProperty(ownerId,Tuple.Create(property.Name,property.Data));
+                    handler.ApplyProperty(ownerId,new Property(property.Name,property.Data));
                     GsLiveRealtime.Callbacks.OnPropertyEvent?.Invoke(null,new OnPropertyEvent(property.Name,actions, property.Data));
                     break;
                 case PropertyActions.Remove:

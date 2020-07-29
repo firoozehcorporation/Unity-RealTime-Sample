@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using FiroozehGameService.Models.GSLive;
+using Plugins.GameService.Utils.RealTimeUtil.Models;
 
 namespace Plugins.GameService.Utils.RealTimeUtil.Interfaces
 {
@@ -31,14 +32,13 @@ namespace Plugins.GameService.Utils.RealTimeUtil.Interfaces
 
         void Dispose();
         
-        void ApplyProperty(string memberId,Tuple<string,object> property);
+        void ApplyProperty(string memberId,Property property);
         
         void RemoveProperty(string memberId,string propertyName);
-
         
         Dictionary<string, object> GetMemberProperties(string memberId);
 
-        List<Member> GetPropertyMembers(string propertyName, object propertyData);
+        List<Member> GetPropertyMembers(Property property);
         
         List<Member> GetPropertyMembers(string propertyName);
         

@@ -26,6 +26,7 @@ using System.Linq;
 using FiroozehGameService.Models;
 using FiroozehGameService.Models.GSLive;
 using Plugins.GameService.Utils.RealTimeUtil.Interfaces;
+using Plugins.GameService.Utils.RealTimeUtil.Models;
 
 namespace Plugins.GameService.Utils.RealTimeUtil.Classes.Handlers
 {
@@ -46,20 +47,19 @@ namespace Plugins.GameService.Utils.RealTimeUtil.Classes.Handlers
             _propertiesCache?.Clear();
         }
 
-        public void ApplyProperty(string memberId, Tuple<string, object> property)
+        public void ApplyProperty(string memberId,Property property)
         {
-            var (pName, pData) = property;
             if (!_propertiesCache.ContainsKey(memberId))
             {
                 _propertiesCache.Add(memberId, new Dictionary<string, object>());
-                _propertiesCache[memberId].Add(pName,pData);
+                _propertiesCache[memberId].Add(property.PropertyName,property.PropertyData);
             }
             else
             {
-                if (_propertiesCache[memberId].ContainsKey(pName))
-                    _propertiesCache[memberId][pName] = pData;
+                if (_propertiesCache[memberId].ContainsKey(property.PropertyName))
+                    _propertiesCache[memberId][property.PropertyName] = property.PropertyData;
                 else
-                    _propertiesCache[memberId].Add(pName,pData);
+                    _propertiesCache[memberId].Add(property.PropertyName,property.PropertyData);
             }
         }
 
@@ -77,12 +77,12 @@ namespace Plugins.GameService.Utils.RealTimeUtil.Classes.Handlers
             return _propertiesCache[memberId];
         }
 
-        public List<Member> GetPropertyMembers(string propertyName, object propertyData)
+        public List<Member> GetPropertyMembers(Property property)
         {
             var ids = _propertiesCache
                 .ToList()
                 .FindAll(pc
-                    => pc.Value.ContainsKey(propertyName) && pc.Value[propertyName] == propertyData)
+                    => pc.Value.ContainsKey(property.PropertyName) && pc.Value[property.PropertyName] == property.PropertyData)
                 .Select(pc => pc.Key)
                 .ToList();
 

@@ -33,6 +33,7 @@ using FiroozehGameService.Utils.Serializer.Models;
 using Plugins.GameService.Utils.RealTimeUtil.Classes.Handlers;
 using Plugins.GameService.Utils.RealTimeUtil.Consts;
 using Plugins.GameService.Utils.RealTimeUtil.Interfaces;
+using Plugins.GameService.Utils.RealTimeUtil.Models;
 using Plugins.GameService.Utils.RealTimeUtil.Models.CallbackModels;
 using Plugins.GameService.Utils.RealTimeUtil.Models.SendableObjects;
 using Plugins.GameService.Utils.RealTimeUtil.Utils;
@@ -46,14 +47,13 @@ namespace Plugins.GameService.Utils.RealTimeUtil
     /// </summary>
     public static class GsLiveRealtime
     {
-
         private static IPrefabHandler _prefabHandler;
         private static IFunctionHandler _functionHandler;
         private static IMonoBehaviourHandler _monoBehaviourHandler;
         private static IPropertyHandler _propertyHandler;
         private static IMemberHandler _memberHandler;
+        
         public static bool IsAvailable;
-
         public const string Version = "Alpha 1.1.0";
         
         public static string CurrentPlayerMemberId => GsSerializer.Object.GetCurrentPlayerMemberId();
@@ -265,11 +265,10 @@ namespace Plugins.GameService.Utils.RealTimeUtil
 
 
         /// <summary>
-        /// Apply a Property With propertyName, You Can Add or Edit A Property
+        /// Apply a Property ,You Can Add or Edit A Property
         /// </summary>
-        /// <param name="propertyName">The name of a Property You Want To Add or Edit</param>
-        /// <param name="propertyData">The Data of a Property You Want To Add or Edit</param>
-        public static void SetProperty(string propertyName , object propertyData)
+        /// <param name="property">The Property You Want To Add or Edit</param>
+        public static void SetProperty(Property property)
         {
             if(!IsAvailable)
                 throw new GameServiceException("GsLiveRealtime is Not Available");
@@ -277,10 +276,10 @@ namespace Plugins.GameService.Utils.RealTimeUtil
             if(!FiroozehGameService.Core.GameService.GSLive.IsRealTimeAvailable())
                 throw new GameServiceException("RealTime is Not Available");
             
-            _propertyHandler.ApplyProperty(CurrentPlayerMemberId,Tuple.Create(propertyName,propertyData));
+            _propertyHandler.ApplyProperty(CurrentPlayerMemberId,property);
            
-            var property = new PropertyData(propertyName,propertyData);
-            SenderUtil.NetworkProperty(property,PropertyActions.Apply);
+            var propertyData = new PropertyData(property.PropertyName,property.PropertyData);
+            SenderUtil.NetworkProperty(propertyData,PropertyActions.Apply);
         }
         
         
@@ -322,9 +321,8 @@ namespace Plugins.GameService.Utils.RealTimeUtil
         /// <summary>
         /// Get All Members have This Property
         /// </summary>
-        /// <param name="propertyName">The name of a Property You Want To Find</param>
-        /// <param name="propertyData">The Data of a Property You Want To Find</param>
-        public static List<Member> GetPropertyMembers(string propertyName , object propertyData)
+        /// <param name="property">The Property You Want To Find it</param>
+        public static List<Member> GetPropertyMembers(Property property)
         {
             if(!IsAvailable)
                 throw new GameServiceException("GsLiveRealtime is Not Available");
@@ -332,7 +330,7 @@ namespace Plugins.GameService.Utils.RealTimeUtil
             if(!FiroozehGameService.Core.GameService.GSLive.IsRealTimeAvailable())
                 throw new GameServiceException("RealTime is Not Available");
             
-            return _propertyHandler.GetPropertyMembers(propertyName,propertyData);
+            return _propertyHandler.GetPropertyMembers(property);
         }
         
         
