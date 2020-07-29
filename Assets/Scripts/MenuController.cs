@@ -6,12 +6,13 @@ using FiroozehGameService.Models;
 using FiroozehGameService.Models.GSLive;
 using FiroozehGameService.Models.GSLive.Command;
 using FiroozehGameService.Utils;
+using Plugins.GameService.Utils.RealTimeUtil.Classes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using LogType = FiroozehGameService.Utils.LogType;
 
-public class MenuController : MonoBehaviour
+public class MenuController : MonoBehaviourGsLive
 {
     public GameObject StartMenu;
     public GameObject LoginMenu;
