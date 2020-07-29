@@ -1,4 +1,4 @@
-// <copyright file="IMonoBehaviourHandler.cs" company="Firoozeh Technology LTD">
+// <copyright file="OnPropertyEvent.cs" company="Firoozeh Technology LTD">
 // Copyright (C) 2020 Firoozeh Technology LTD. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,16 +19,25 @@
 * @author Alireza Ghodrati
 */
 
-namespace Plugins.GameService.Utils.RealTimeUtil.Interfaces
-{
-    internal interface IMonoBehaviourHandler
-    {
-        void Init();
 
-        void Dispose();
-        /// <summary>
-        /// Can be used to refresh the list of MonoBehaviours on this GameObject
-        /// </summary>
-        void RefreshMonoBehaviourCache();
+using System;
+using Plugins.GameService.Utils.RealTimeUtil.Consts;
+using UnityEngine;
+
+namespace Plugins.GameService.Utils.RealTimeUtil.Models.CallbackModels
+{
+    [Serializable]
+    public class OnPropertyEvent
+    {
+        public string propertyName;
+        public object propertyData;
+        public PropertyActions actions;
+
+        public OnPropertyEvent(string propertyName, PropertyActions actions, object propertyData = null)
+        {
+            this.propertyName = propertyName;
+            this.propertyData = propertyData;
+            this.actions = actions;
+        }
     }
 }
