@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
 
     private static void OnPropertyEvent(object sender, OnPropertyEvent propertyEvent)
     {
-        Debug.Log("OnPropertyEvent > Ac : " + propertyEvent.actions
+        Debug.Log("OnPropertyEvent > Ac : " + propertyEvent.action
                                             + ", Name : " + propertyEvent.propertyName
                                             + ", Data : " + propertyEvent.propertyData
                                             + ", OwnerID : " + propertyEvent.ownerMemberId);
