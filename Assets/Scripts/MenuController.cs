@@ -26,8 +26,8 @@ public class MenuController : MonoBehaviourGsLive
     public Button Submit;
     public GameObject SwitchToRegisterOrLogin;
     public Text LoginErr;
-
-
+    
+    
     void Start()
     {
         if(GameService.IsAuthenticated())

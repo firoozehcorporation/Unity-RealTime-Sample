@@ -19,9 +19,8 @@ public class GameController : MonoBehaviourGsLive
     public Camera mainCamera;
     public Canvas spawnCanvas;
     
-    
     private GameObject _me,_enemy;
-
+    
     void Start()
     {
         RealTimeEventHandlers.LeftRoom += LeftRoom;
@@ -93,5 +92,4 @@ public class GameController : MonoBehaviourGsLive
         GameService.GSLive.RealTime.LeaveRoom();
         SceneManager.LoadScene("MenuScene");
     }
-    
 }
