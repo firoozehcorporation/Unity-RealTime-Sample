@@ -20,8 +20,8 @@ public class GameController : MonoBehaviourGsLive
     public Canvas spawnCanvas;
     
     private GameObject _me,_enemy;
-    
-    void Start()
+
+    private void Start()
     {
         RealTimeEventHandlers.LeftRoom += LeftRoom;
         GsLiveRealtime.Callbacks.OnBeforeInstantiateHandler += OnBeforeInstantiateHandler;
@@ -29,6 +29,19 @@ public class GameController : MonoBehaviourGsLive
         GsLiveRealtime.Callbacks.OnDestroyObjectHandler += OnDestroyObjectHandler;
         GsLiveRealtime.Callbacks.OnPropertyEvent += OnPropertyEvent;
         spawnPlayerBtn.onClick.AddListener(SpawnPlayer);
+        Debug.Log("GameController Start Called!");
+    }
+
+    private void OnDestroy()
+    {
+        RealTimeEventHandlers.LeftRoom = null;
+        GsLiveRealtime.Callbacks.OnBeforeInstantiateHandler = null;
+        GsLiveRealtime.Callbacks.OnAfterInstantiateHandler = null;
+        GsLiveRealtime.Callbacks.OnDestroyObjectHandler = null;
+        GsLiveRealtime.Callbacks.OnPropertyEvent = null;
+        spawnPlayerBtn.onClick.RemoveListener(SpawnPlayer);
+        Debug.Log("GameController Destroy Called!");
+
     }
 
     private static void OnPropertyEvent(object sender, OnPropertyEvent propertyEvent)

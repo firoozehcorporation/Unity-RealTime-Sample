@@ -3,7 +3,6 @@ using FiroozehGameService.Core;
 using FiroozehGameService.Core.GSLive;
 using FiroozehGameService.Handlers;
 using FiroozehGameService.Models;
-using FiroozehGameService.Models.GSLive;
 using FiroozehGameService.Models.GSLive.Command;
 using FiroozehGameService.Utils;
 using Plugins.GameService.Utils.RealTimeUtil.Classes;
@@ -32,6 +31,7 @@ public class MenuController : MonoBehaviourGsLive
     {
         if(GameService.IsAuthenticated())
         {
+            Debug.Log("IsAuthenticated before!");
             Status.text = "Status : Connected!";
             StartGameBtn.interactable = true;
             StartGameBtn.onClick.AddListener(async () =>
@@ -42,18 +42,19 @@ public class MenuController : MonoBehaviourGsLive
                 Status.text = "MatchMaking...";
                 StartGameBtn.interactable = false;
             });
-            return;
         }
-            
-        SetEventListeners();
-        ConnectToGamesService();
+        else
+        {
+            Debug.Log("First Init!");
+            SetEventListeners();
+            ConnectToGamesService();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
-        GameService.Logout();
         Application.Quit();
     }
     
@@ -133,7 +134,6 @@ public class MenuController : MonoBehaviourGsLive
             RealTimeEventHandlers.Error += OnError;
                 
             RealTimeEventHandlers.JoinedRoom += OnJoinRoom;
-            RealTimeEventHandlers.LeftRoom += LeftRoom;
             LogUtil.LogEventHandler += LogEventHandler;
         }
         
@@ -143,11 +143,6 @@ public class MenuController : MonoBehaviourGsLive
             else Debug.LogError(e.Txt);
         }
         
-        private static void LeftRoom(object sender, Member e)
-        {
-            Debug.Log("LeftRoom : " + e.Name);
-        }
-
 
         private static void OnJoinRoom(object sender, JoinEvent e)
         {
