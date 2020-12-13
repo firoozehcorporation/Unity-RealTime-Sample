@@ -4,12 +4,10 @@ using FiroozehGameService.Core.GSLive;
 using FiroozehGameService.Handlers;
 using FiroozehGameService.Models;
 using FiroozehGameService.Models.GSLive.Command;
-using FiroozehGameService.Utils;
 using Plugins.GameService.Utils.RealTimeUtil.Classes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using LogType = FiroozehGameService.Utils.LogType;
 
 public class MenuController : MonoBehaviourGsLive
 {
@@ -132,18 +130,10 @@ public class MenuController : MonoBehaviourGsLive
         {
             RealTimeEventHandlers.SuccessfullyLogined += OnSuccessfullyLogined;
             RealTimeEventHandlers.Error += OnError;
-                
             RealTimeEventHandlers.JoinedRoom += OnJoinRoom;
-            LogUtil.LogEventHandler += LogEventHandler;
         }
         
-        private static void LogEventHandler(object sender, Log e)
-        {
-            if(e.Type == LogType.Normal) Debug.Log(e.Txt);
-            else Debug.LogError(e.Txt);
-        }
-        
-
+    
         private static void OnJoinRoom(object sender, JoinEvent e)
         {
             Debug.Log("OnJoinRoom : " + e.JoinData.JoinedMember.Name);
