@@ -210,6 +210,12 @@
             </summary>
             <value> return The Current Times</value>
         </member>
+        <member name="M:FiroozehGameService.Core.GameService.GetCurrentGame">
+            <summary>
+                This command Gets The Current Game
+            </summary>
+            <value> return The Current Game</value>
+        </member>
         <member name="M:FiroozehGameService.Core.GameService.CanLoginWithPhoneNumber">
             <summary>
                 This command Check Can Login With Phone Number
@@ -1095,6 +1101,11 @@
                 <see cref="M:FiroozehGameService.Core.GSLive.GSLiveRT.AutoMatch(FiroozehGameService.Core.GSLive.GSLiveOption.AutoMatchOption)" />
             </summary>
         </member>
+        <member name="F:FiroozehGameService.Handlers.RealTimeEventHandlers.Reconnected">
+            <summary>
+                Calls When Current Player Try To Reconnect to Server
+            </summary>
+        </member>
         <member name="F:FiroozehGameService.Handlers.RealTimeEventHandlers.LeftRoom">
             <summary>
                 Calls When SomeOne Left the Current Room
@@ -1187,6 +1198,11 @@
                 <see cref="M:FiroozehGameService.Core.GSLive.GSLiveTB.JoinRoom(System.String,System.String,System.String)" />
                 <see cref="M:FiroozehGameService.Core.GSLive.GSLiveTB.CreateRoom(FiroozehGameService.Core.GSLive.GSLiveOption.CreateRoomOption)" />
                 <see cref="M:FiroozehGameService.Core.GSLive.GSLiveTB.AutoMatch(FiroozehGameService.Core.GSLive.GSLiveOption.AutoMatchOption)" />
+            </summary>
+        </member>
+        <member name="F:FiroozehGameService.Handlers.TurnBasedEventHandlers.Reconnected">
+            <summary>
+                Calls When Current Player Reconnect to Server
             </summary>
         </member>
         <member name="F:FiroozehGameService.Handlers.TurnBasedEventHandlers.LeftRoom">
@@ -1512,6 +1528,35 @@
             Gets the Function ExecutionTime
             </summary>
         </member>
+        <member name="T:FiroozehGameService.Models.BasicApi.Game">
+            <summary>
+                Represents Game Data Model In Game Service Basic API
+            </summary>
+        </member>
+        <member name="F:FiroozehGameService.Models.BasicApi.Game.Name">
+            <summary>
+                Gets the Game Name.
+            </summary>
+            <value>the Game Name</value>
+        </member>
+        <member name="F:FiroozehGameService.Models.BasicApi.Game.Image">
+            <summary>
+                Gets the Game Cover URL.
+            </summary>
+            <value>the Game Cover URL</value>
+        </member>
+        <member name="F:FiroozehGameService.Models.BasicApi.Game.Publisher">
+            <summary>
+                Gets the Game Publisher.
+            </summary>
+            <value>the Game Publisher</value>
+        </member>
+        <member name="F:FiroozehGameService.Models.BasicApi.Game.OnlinePlayers">
+            <summary>
+                Gets the Game Online Players.
+            </summary>
+            <value>the Game Online Players</value>
+        </member>
         <member name="T:FiroozehGameService.Models.BasicApi.LeaderBoard">
             <summary>
                 Represents LeaderBoard Data Model In Game Service Basic API
@@ -1622,6 +1667,23 @@
                 Gets the Member Phone Number.
             </summary>
             <value>the Member Phone Number</value>
+        </member>
+        <member name="T:FiroozehGameService.Models.BasicApi.Publisher">
+            <summary>
+                Represents Publisher Data Model In Game Service Basic API
+            </summary>
+        </member>
+        <member name="F:FiroozehGameService.Models.BasicApi.Publisher.Name">
+            <summary>
+                Gets the Game Name.
+            </summary>
+            <value>the Game Name</value>
+        </member>
+        <member name="F:FiroozehGameService.Models.BasicApi.Publisher.Image">
+            <summary>
+                Gets the Game Cover URL.
+            </summary>
+            <value>the Game Cover URL</value>
         </member>
         <member name="T:FiroozehGameService.Models.BasicApi.Results`1">
             <summary>
@@ -2071,6 +2133,13 @@
                 Represents GameService RevokeActiveDevice HTTP Errors
                 Errors that occur in the following Functions:
                 <see cref="M:FiroozehGameService.Core.GameService.RevokeActiveDevice(System.String)" />
+            </summary>
+        </member>
+        <member name="T:FiroozehGameService.Models.Consts.GameServiceErrors.Http.GetCurrentGame">
+            <summary>
+                Represents GameService GetCurrentGame HTTP Errors
+                Errors that occur in the following Functions:
+                <see cref="M:FiroozehGameService.Core.GameService.GetCurrentGame" />
             </summary>
         </member>
         <member name="T:FiroozehGameService.Models.Consts.GameServiceErrors.Social">
@@ -2589,6 +2658,21 @@
         <member name="F:FiroozehGameService.Models.Enums.GSLive.JoinType.AutoMatch">
             <summary>
             Sets When Current Member Join From AutoMatch
+            </summary>
+        </member>
+        <member name="T:FiroozehGameService.Models.Enums.GSLive.ReconnectStatus">
+            <summary>
+                Represents ReconnectStatus Of Reconnect
+            </summary>
+        </member>
+        <member name="F:FiroozehGameService.Models.Enums.GSLive.ReconnectStatus.Connecting">
+            <summary>
+            The Connecting Status, Current Client Try To Reconnect
+            </summary>
+        </member>
+        <member name="F:FiroozehGameService.Models.Enums.GSLive.ReconnectStatus.Connected">
+            <summary>
+            The Connected Status, Current Client Connected To Server
             </summary>
         </member>
         <member name="T:FiroozehGameService.Models.Enums.GSLive.RT.MessageType">

@@ -616,7 +616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5348599012719395021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -716,6 +716,7 @@ MonoBehaviour:
   id: 1
   ownerId: 
   isMine: 0
+  isAvailable: 0
   serializableComponent: {fileID: 3671166482664682362}
 --- !u!114 &3671166482664682362
 MonoBehaviour:

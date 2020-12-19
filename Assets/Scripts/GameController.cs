@@ -1,6 +1,7 @@
 using Controller;
 using FiroozehGameService.Core;
 using FiroozehGameService.Handlers;
+using FiroozehGameService.Models.Enums.GSLive;
 using FiroozehGameService.Models.GSLive;
 using Plugins.GameService.Utils.RealTimeUtil;
 using Plugins.GameService.Utils.RealTimeUtil.Classes;
@@ -24,6 +25,7 @@ public class GameController : MonoBehaviourGsLive
     private void Start()
     {
         RealTimeEventHandlers.LeftRoom += LeftRoom;
+        RealTimeEventHandlers.Reconnected += Reconnected;
         GsLiveRealtime.Callbacks.OnBeforeInstantiateHandler += OnBeforeInstantiateHandler;
         GsLiveRealtime.Callbacks.OnAfterInstantiateHandler += OnAfterInstantiateHandler;
         GsLiveRealtime.Callbacks.OnDestroyObjectHandler += OnDestroyObjectHandler;
@@ -44,6 +46,11 @@ public class GameController : MonoBehaviourGsLive
 
     }
 
+    private void Reconnected(object sender, ReconnectStatus e)
+    {
+        Debug.Log("Reconnected : " + e);
+    }
+    
     private static void OnPropertyEvent(object sender, OnPropertyEvent propertyEvent)
     {
         Debug.Log("OnPropertyEvent > Ac : " + propertyEvent.action
