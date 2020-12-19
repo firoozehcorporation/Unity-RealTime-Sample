@@ -1552,7 +1552,7 @@ MonoBehaviour:
   ClientSecret: 5c39mkixnkydoa80kwjhl5
   RealTimeUtilEnabled: 1
   DebugSystemEnabled: 1
-  EnableDebugLogger: 1
+  EnableDebugLogger: 0
   EnableErrorLogger: 1
   EnableExceptionLogger: 1
   EnableDebugLocations: 0
