@@ -130,10 +130,18 @@ public class MenuController : MonoBehaviourGsLive
         {
             RealTimeEventHandlers.SuccessfullyLogined += OnSuccessfullyLogined;
             RealTimeEventHandlers.Error += OnError;
+            RealTimeEventHandlers.AutoMatchUpdated += AutoMatchUpdated;
             RealTimeEventHandlers.JoinedRoom += OnJoinRoom;
         }
-        
-    
+
+        private static void AutoMatchUpdated(object sender, AutoMatchEvent e)
+        {
+           Debug.Log("AutoMatchUpdated -> Status : " + e.Status);
+           foreach (var player in e.Players)
+               Debug.Log("AutoMatchUpdated -> player : " + player.Name);
+        }
+
+
         private static void OnJoinRoom(object sender, JoinEvent e)
         {
             Debug.Log("OnJoinRoom : " + e.JoinData.JoinedMember.Name);
