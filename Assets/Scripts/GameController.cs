@@ -108,8 +108,7 @@ public class GameController : MonoBehaviourGsLive
 
     private static void LeftRoom(object sender, Member e)
     {
-        Debug.Log("enemy left game!" + e.Name);
-        GameService.GSLive.RealTime.LeaveRoom();
-        SceneManager.LoadScene("MenuScene");
+        Debug.Log("enemy left game , Name : " + e.Name + ", IsMe : " + e.User.IsMe);
+        if(e.User.IsMe) SceneManager.LoadScene("MenuScene");
     }
 }
