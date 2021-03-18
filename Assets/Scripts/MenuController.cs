@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviourGsLive
+public class MenuController : GameServiceMonoBehaviour
 {
     public GameObject StartMenu;
     public GameObject LoginMenu;
@@ -34,7 +34,7 @@ public class MenuController : MonoBehaviourGsLive
             StartGameBtn.interactable = true;
             StartGameBtn.onClick.AddListener(async () =>
             {
-                await GameService.GSLive.RealTime.AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample"));
+                await GameService.GSLive.RealTime().AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample"));
                 
                 Status.color = Color.green;
                 Status.text = "MatchMaking...";
@@ -99,7 +99,7 @@ public class MenuController : MonoBehaviourGsLive
                             && string.IsNullOrEmpty(pass))
                             LoginErr.text = "Invalid Input!";
                         else
-                            await GameService.SignUp(nickName, email, pass);
+                            await GameService.LoginOrSignUp.SignUp(nickName, email, pass);
                           
                         
 
@@ -112,7 +112,7 @@ public class MenuController : MonoBehaviourGsLive
                         if (string.IsNullOrEmpty(email) && string.IsNullOrEmpty(pass))
                             LoginErr.text = "Invalid Input!";
                         else
-                            await GameService.Login(email, pass);
+                            await GameService.LoginOrSignUp.Login(email, pass);
                         
                     }
                 }
@@ -168,7 +168,7 @@ public class MenuController : MonoBehaviourGsLive
             StartGameBtn.interactable = true;
             StartGameBtn.onClick.AddListener(async () =>
             {
-                await GameService.GSLive.RealTime.AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample",2,3));
+                await GameService.GSLive.RealTime().AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample",2,3));
                 
                 Status.color = Color.green;
                 Status.text = "MatchMaking...";

@@ -5,6 +5,7 @@ using FiroozehGameService.Models.Enums.GSLive;
 using FiroozehGameService.Models.GSLive;
 using Plugins.GameService.Utils.RealTimeUtil;
 using Plugins.GameService.Utils.RealTimeUtil.Classes;
+using Plugins.GameService.Utils.RealTimeUtil.Models;
 using Plugins.GameService.Utils.RealTimeUtil.Models.CallbackModels;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public class GameController : MonoBehaviourGsLive
+public class GameController : GameServiceMonoBehaviour
 {
     public GameObject mePrefab;
     public Button spawnPlayerBtn;
