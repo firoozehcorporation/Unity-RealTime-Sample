@@ -1552,12 +1552,12 @@ MonoBehaviour:
   ClientSecret: 5c39mkixnkydoa80kwjhl5
   RealTimeUtilEnabled: 1
   DebugSystemEnabled: 1
-  EnableDebugLogger: 0
+  EnableDebugLogger: 1
   EnableErrorLogger: 1
   EnableExceptionLogger: 1
   EnableDebugLocations: 0
   DebugLocations: 
-  EnableSaveDebugLogs: 0
+  EnableSaveDebugLogs: 1
 --- !u!1 &1282209485
 GameObject:
   m_ObjectHideFlags: 0

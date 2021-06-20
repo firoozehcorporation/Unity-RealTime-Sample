@@ -1,11 +1,9 @@
 using Controller;
-using FiroozehGameService.Core;
 using FiroozehGameService.Handlers;
 using FiroozehGameService.Models.Enums.GSLive;
 using FiroozehGameService.Models.GSLive;
 using Plugins.GameService.Utils.RealTimeUtil;
 using Plugins.GameService.Utils.RealTimeUtil.Classes;
-using Plugins.GameService.Utils.RealTimeUtil.Models;
 using Plugins.GameService.Utils.RealTimeUtil.Models.CallbackModels;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +17,8 @@ public class GameController : GameServiceMonoBehaviour
     public GameObject mePrefab;
     public Button spawnPlayerBtn;
     public Camera mainCamera;
-    public Canvas spawnCanvas;
+    public Button SpawnButton; 
+    public Text NetworkDetails;
     
     private GameObject _me,_enemy;
 
@@ -33,6 +32,13 @@ public class GameController : GameServiceMonoBehaviour
         GsLiveRealtime.Callbacks.OnPropertyEvent += OnPropertyEvent;
         spawnPlayerBtn.onClick.AddListener(SpawnPlayer);
         Debug.Log("GameController Start Called!");
+    }
+
+    private void Update()
+    {
+        NetworkDetails.text = null;
+        NetworkDetails.text += "RTT : " + GsLiveRealtime.GetRoundTripTime() + "\r\n";
+        NetworkDetails.text += "Packet Lost : " +  GsLiveRealtime.GetPacketLost();
     }
 
     private void OnDestroy()
@@ -94,7 +100,7 @@ public class GameController : GameServiceMonoBehaviour
         
         Debug.Log("Player Spawn in " + randomVector);
         mainCamera.gameObject.SetActive(false);
-        spawnCanvas.gameObject.SetActive(false);
+        SpawnButton.gameObject.SetActive(false);
 
         _me = GsLiveRealtime.Instantiate(mePrefab.name, randomVector, Quaternion.identity);
 
@@ -109,7 +115,7 @@ public class GameController : GameServiceMonoBehaviour
 
     private static void LeftRoom(object sender, Member e)
     {
-        Debug.Log("enemy left game , Name : " + e.Name + ", IsMe : " + e.User.IsMe);
+        Debug.Log("player left game , Name : " + e.Name + ", IsMe : " + e.User.IsMe);
         if(e.User.IsMe) SceneManager.LoadScene("MenuScene");
     }
 }
