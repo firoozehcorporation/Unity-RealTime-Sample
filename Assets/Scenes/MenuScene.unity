@@ -1551,13 +1551,13 @@ MonoBehaviour:
   ClientId: doodooid
   ClientSecret: 5c39mkixnkydoa80kwjhl5
   RealTimeUtilEnabled: 1
-  DebugSystemEnabled: 1
-  EnableDebugLogger: 1
-  EnableErrorLogger: 1
-  EnableExceptionLogger: 1
+  DebugSystemEnabled: 0
+  EnableDebugLogger: 0
+  EnableErrorLogger: 0
+  EnableExceptionLogger: 0
   EnableDebugLocations: 0
   DebugLocations: 
-  EnableSaveDebugLogs: 1
+  EnableSaveDebugLogs: 0
 --- !u!1 &1282209485
 GameObject:
   m_ObjectHideFlags: 0
