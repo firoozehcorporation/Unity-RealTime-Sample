@@ -38,7 +38,9 @@ public class GameController : GameServiceMonoBehaviour
     {
         NetworkDetails.text = null;
         NetworkDetails.text += "RTT : " + GsLiveRealtime.GetRoundTripTime() + "\r\n";
-        NetworkDetails.text += "Packet Lost : " +  GsLiveRealtime.GetPacketLost();
+        NetworkDetails.text += "Packet Lost : " +  GsLiveRealtime.GetPacketLost() + "\r\n";
+        NetworkDetails.text += "SR : " +  GsLiveRealtime.SerializationRate;
+
     }
 
     private void OnDestroy()
