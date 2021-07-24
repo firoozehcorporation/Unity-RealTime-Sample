@@ -32,9 +32,9 @@ public class MenuController : GameServiceMonoBehaviour
             Debug.Log("IsAuthenticated before!");
             Status.text = "Status : Connected!";
             StartGameBtn.interactable = true;
-            StartGameBtn.onClick.AddListener(async () =>
+            StartGameBtn.onClick.AddListener(() =>
             {
-                await GameService.GSLive.RealTime().AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample-Test-New"));
+                GameService.GSLive.RealTime().AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample-Test-New"));
                 
                 Status.color = Color.green;
                 Status.text = "MatchMaking...";
@@ -166,9 +166,9 @@ public class MenuController : GameServiceMonoBehaviour
             
             Status.text = "Status : Connected!";
             StartGameBtn.interactable = true;
-            StartGameBtn.onClick.AddListener(async () =>
+            StartGameBtn.onClick.AddListener(() =>
             {
-                await GameService.GSLive.RealTime().AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample-Test-New"));
+                GameService.GSLive.RealTime().AutoMatch(new GSLiveOption.AutoMatchOption("GSRealtimeSample-Test-New"));
                 
                 Status.color = Color.green;
                 Status.text = "MatchMaking...";
