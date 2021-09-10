@@ -118,6 +118,6 @@ public class GameController : GameServiceMonoBehaviour
     private static void LeftRoom(object sender, Member e)
     {
         Debug.Log("player left game , Name : " + e.Name + ", IsMe : " + e.User.IsMe);
-        if(e.User.IsMe) SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MenuScene");
     }
 }

@@ -62,11 +62,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
@@ -137,11 +136,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 7eaf63f337513984ca983d2c2a407159, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -215,11 +213,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 9b7876ee1ffade44f8b9edbf30e1d9fc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -324,11 +321,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 9b7876ee1ffade44f8b9edbf30e1d9fc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -496,11 +492,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 7eaf63f337513984ca983d2c2a407159, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -607,7 +602,7 @@ GameObject:
   - component: {fileID: 5348599012719395012}
   - component: {fileID: 3604128964816024347}
   - component: {fileID: 6992722817524897716}
-  - component: {fileID: 3671166482664682362}
+  - component: {fileID: 423644100160384343}
   - component: {fileID: 6828593859128354611}
   - component: {fileID: 5577068457457596306}
   m_Layer: 0
@@ -659,6 +654,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -717,8 +713,8 @@ MonoBehaviour:
   ownerId: 
   isMine: 0
   isAvailable: 0
-  serializableComponent: {fileID: 3671166482664682362}
---- !u!114 &3671166482664682362
+  serializableComponent: {fileID: 423644100160384343}
+--- !u!114 &423644100160384343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -758,7 +754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a48543e4642bcb4bb363fd03bb1168a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   rotAngle: 2
   turnSmoothTime: 1
   forward: {x: 0, y: 0, z: 0}

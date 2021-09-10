@@ -23,8 +23,13 @@ public class MenuController : GameServiceMonoBehaviour
     public Button Submit;
     public GameObject SwitchToRegisterOrLogin;
     public Text LoginErr;
-    
-    
+
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 50;
+    }
+
     void Start()
     {
         if(GameService.IsAuthenticated())
